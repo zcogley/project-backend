@@ -1,0 +1,38 @@
+.jumbotron {
+  color: white;
+  background: #337ab7;;
+  padding: 1%;
+  margin: 1%;
+  border-radius: 5px;
+}
+
+header {
+  color: white;
+}
+
+body {
+  text-align: center;
+}
+
+div {
+  align-items: center;
+}
+
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+li {
+  justify-content: left;
+  overflow-wrap: normal;
+}
+
+.btn-block {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-default {
+  white-space: normal;
+}
