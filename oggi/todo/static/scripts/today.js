@@ -25,6 +25,23 @@ function getEvents() {
   });
 }
 
+// --------------get CSFR cookie function---------
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 
 // ----------VIEW----------
 function render() {
@@ -34,8 +51,6 @@ function render() {
 
   // render todo items
   model.forEach(function(item) {
-
-    console.log(item.fields.title);
 
     if(item.fields.day == "today") {
 
@@ -249,7 +264,45 @@ $(document).ready(() => {
     evt.preventDefault();
 
     // add a new event from whatever typed
-    addNewEvent(model.currentEvent);
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    $.ajax({
+      method: "POST",
+      url: "/add/",
+      dataType: "json",
+      data: {
+        // csrfmiddlewaretoken: "{{ csrf_token }}",
+        model: "todo.item",
+        fields: {
+          author: 1,
+          day: "today",
+          title: model.currentEvent
+        },
+      },
+
+
+      success: function(response) {
+        console.log(response);
+        console.log("an event was added")
+      },
+        error(err) {
+          console.log(err);
+        },
+    });
+
+    getEvents();
 
     // renders page
     render();

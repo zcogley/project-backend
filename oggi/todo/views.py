@@ -32,12 +32,20 @@ def done(request):
 
 def add(request):
     if request.method == "POST":
-        form = itemForm(request.POST)
-        if form.is_valid():
-            item = form.save(commit=False)
-            item.author = request.user
-            item.save()
-            return redirect('add')
+        # form = itemForm(request.POST)
+        # if form.is_valid():
+        #     item = form.save(commit=False)
+        #     item.author = request.user
+        #     item.save()
+        #     return redirect('add')
+
+
+
+        # obj = serializers.deserialize('json', data, ignorenonexistent=True)
+        # obj.save()
+
+        return HttpResponse('just seeing if I can get a response')
+
     else:
         form = itemForm()
-    return render(request, 'todo/add.html', {'form': form})
+        return render(request, 'todo/add.html', {'form': form})
