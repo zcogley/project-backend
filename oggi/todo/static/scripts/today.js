@@ -110,12 +110,6 @@ function render() {
       var buttonElement = $('<button></button>')
         .text(item.fields.title)
         .attr('class', 'btn btn-default')
-        .click(function() {
-          var index = model.events.indexOf(event);
-          var done = model.events.splice(index, 1);
-          model.completes.push(done[0]);
-          render();
-        });
 
       // creates the 'done' checkmark
       var checkButton = $('<button></button>')
@@ -244,12 +238,6 @@ function render() {
       var btnElement = $('<button></button>')
         .text(item.fields.title)
         .attr('class', 'btn btn-default')
-        .click(function() {
-          var idx = model.completes.indexOf(complete);
-          var did = model.completes.splice(idx, 1);
-          model.events.push(did[0]);
-          render();
-        })
 
       // creates the 'redo' glyphicon
       var redoButton = $('<button></button>')
@@ -382,12 +370,6 @@ function render() {
       var btnElement = $('<button></button>')
         .text(item.fields.title)
         .attr('class', 'btn btn-default')
-        .click(function() {
-          var idx = model.upcoming.indexOf(upcoming);
-          var did = model.upcoming.splice(idx, 1);
-          model.events.push(did[0]);
-          render();
-        });
 
       // creates each add event to inbox button
       var inboxButton = $('<button></button>')
