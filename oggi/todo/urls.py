@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^soon/$', views.soon, name='soon'),
     url(r'^done/$', views.done, name='done'),
     url(r'^add/$', views.add, name='add'),
+    url(r'^delete/$', views.delete, name='delete'),
 ]
