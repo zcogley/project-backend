@@ -31,11 +31,17 @@ def add(request):
 
 def delete(request):
     if request.method == "POST":
-        key = request.POST['key']
-        to_delete = item.objects.get(pk=key)
-        to_delete.delete()
+        if  request.POST['day'] == "Finito":
+            finitos = item.objects.filter(day='done')
+            finitos.delete()
+            return HttpResponse('200')
 
-        return HttpResponse('200')
+        else:
+            key = request.POST['key']
+            to_delete = item.objects.get(pk=key)
+            to_delete.delete()
+
+            return HttpResponse('200')
 
     else:
         return HttpResponse('417')

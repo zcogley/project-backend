@@ -16,12 +16,8 @@ function getEvents() {
     url: "/today",
 
     success: function(response) {
-
       model = JSON.parse(response);
-
-
       }
-
   });
 }
 
@@ -45,6 +41,8 @@ function getCookie(name) {
 
 // ----------VIEW----------
 function render() {
+
+  getEvents();
 
   $('#instructions').empty();
   $('#events').empty();
@@ -82,7 +80,8 @@ function render() {
             url: "/delete/",
             dataType: "json",
             data: {
-              key: index
+              key: index,
+              day: 'today'
             },
 
             success: function(response) {
@@ -94,7 +93,6 @@ function render() {
               },
           });
 
-          getEvents()
           render();
         });
 
@@ -152,7 +150,6 @@ function render() {
               },
           });
 
-          getEvents()
           render();
         });
 
@@ -213,7 +210,8 @@ function render() {
               url: "/delete/",
               dataType: "json",
               data: {
-                key: index
+                key: index,
+                day: 'done'
               },
 
               success: function(response) {
@@ -225,7 +223,6 @@ function render() {
                 },
             });
 
-            getEvents()
             render();
           });
 
@@ -280,7 +277,6 @@ function render() {
               },
           });
 
-          getEvents()
           render();
         });
       var redoSpan = $('<span></span>')
@@ -299,7 +295,41 @@ function render() {
     .text('Finito')
     .attr('class', 'btn btn-primary')
     .click(function() {
-      model.completes = [];
+      // get the CSRF token for validation
+      var csrftoken = getCookie('csrftoken');
+
+      function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+
+      // sets up ajax to send the CSRF token
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+      // sends the event to the DB
+      $.ajax({
+        method: "POST",
+        url: "/delete/",
+        dataType: "json",
+        data: {
+          day: 'Finito'
+        },
+
+        success: function(response) {
+          console.log(response);
+          console.log("All completed events deleted from the DB")
+        },
+          error(err) {
+            console.log(err);
+          },
+      });
+
       render();
     });
   $('#clearall').empty();
@@ -341,7 +371,8 @@ function render() {
             url: "/delete/",
             dataType: "json",
             data: {
-              key: index
+              key: index,
+              day: 'soon'
             },
 
             success: function(response) {
@@ -353,7 +384,6 @@ function render() {
               },
           });
 
-          getEvents()
           render();
         });
 
@@ -412,7 +442,6 @@ function render() {
               },
           });
 
-          getEvents()
           render();
         });
       var inboxSpan = $('<span></span>')
@@ -440,8 +469,8 @@ function addUpcomingEvent(event){
 
 // ---------DOM EVENT HANDLERS---------
 $(document).ready(() => {
-  // update model for todo items
   getEvents();
+  // update model for todo items
 
   // when the textbox content changes, updates the .currentEvent
   // property of the model
@@ -495,8 +524,6 @@ $(document).ready(() => {
         },
     });
 
-    getEvents();
-
     // renders page
     render();
 
@@ -543,8 +570,6 @@ $(document).ready(() => {
           console.log(err);
         },
     });
-
-    getEvents();
 
     // renders page
     render();
