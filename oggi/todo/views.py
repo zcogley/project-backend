@@ -13,22 +13,8 @@ def index(request):
     return render(request, 'todo/index.html')
 
 def today(request):
-    # today_item_db = get_list_or_404(item, day="today")
-    # if today_item_db:
-    #     today_item_list = []
-    #     for thing in today_item_db:
-    #         today_item_list.append(str(thing) + ', ')
-    # return HttpResponse(today_item_list)
     data = serializers.serialize('json', item.objects.all())
     return HttpResponse(data)
-
-def soon(request):
-    soon_item_db = get_list_or_404(item, day="soon")
-    return HttpResponse(soon_item_db)
-
-def done(request):
-    done_item_db = get_list_or_404(item, day="done")
-    return HttpResponse(done_item_db)
 
 def add(request):
     if request.method == "POST":
@@ -48,6 +34,19 @@ def delete(request):
         key = request.POST['key']
         to_delete = item.objects.get(pk=key)
         to_delete.delete()
+
+        return HttpResponse('200')
+
+    else:
+        return HttpResponse('417')
+
+def move(request):
+    if request.method == "POST":
+        key = request.POST['key']
+        day = request.POST['day']
+        to_update = item.objects.get(pk=key)
+        to_update.day = day
+        to_update.save()
 
         return HttpResponse('200')
 

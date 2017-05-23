@@ -121,9 +121,44 @@ function render() {
       var checkButton = $('<button></button>')
         .attr('class', 'btn btn-success')
         .click(function() {
-          var index = model.events.indexOf(event);
-          var done = model.events.splice(index, 1);
-          model.completes.push(done[0]);
+          var index = item.pk;
+
+          // get the CSRF token for validation
+          var csrftoken = getCookie('csrftoken');
+
+          function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+          }
+
+          // sets up ajax to send the CSRF token
+          $.ajaxSetup({
+              beforeSend: function(xhr, settings) {
+                  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                  }
+              }
+          });
+
+          // sends the event to the DB
+          $.ajax({
+            method: "POST",
+            url: "/move/",
+            dataType: "json",
+            data: {
+              key: index,
+              day: "done"
+            },
+
+            success: function(response) {
+              console.log("event moved to done")
+            },
+              error(err) {
+                console.log(err);
+              },
+          });
+
+          getEvents()
           render();
         });
 
@@ -220,9 +255,44 @@ function render() {
       var redoButton = $('<button></button>')
         .attr('class', 'btn btn-success')
         .click(function() {
-          var index = model.completes.indexOf(complete);
-          var done = model.completes.splice(index, 1);
-          model.events.push(done[0]);
+          var index = item.pk;
+
+          // get the CSRF token for validation
+          var csrftoken = getCookie('csrftoken');
+
+          function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+          }
+
+          // sets up ajax to send the CSRF token
+          $.ajaxSetup({
+              beforeSend: function(xhr, settings) {
+                  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                  }
+              }
+          });
+
+          // sends the event to the DB
+          $.ajax({
+            method: "POST",
+            url: "/move/",
+            dataType: "json",
+            data: {
+              key: index,
+              day: "today"
+            },
+
+            success: function(response) {
+              console.log("event moved to today")
+            },
+              error(err) {
+                console.log(err);
+              },
+          });
+
+          getEvents()
           render();
         });
       var redoSpan = $('<span></span>')
@@ -323,9 +393,44 @@ function render() {
       var inboxButton = $('<button></button>')
         .attr('class', 'btn btn-success')
         .click(function() {
-          var index = model.upcoming.indexOf(upcoming);
-          var done = model.upcoming.splice(index, 1);
-          model.events.push(done[0]);
+          var index = item.pk;
+
+          // get the CSRF token for validation
+          var csrftoken = getCookie('csrftoken');
+
+          function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+          }
+
+          // sets up ajax to send the CSRF token
+          $.ajaxSetup({
+              beforeSend: function(xhr, settings) {
+                  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                  }
+              }
+          });
+
+          // sends the event to the DB
+          $.ajax({
+            method: "POST",
+            url: "/move/",
+            dataType: "json",
+            data: {
+              key: index,
+              day: "today"
+            },
+
+            success: function(response) {
+              console.log("event moved to today")
+            },
+              error(err) {
+                console.log(err);
+              },
+          });
+
+          getEvents()
           render();
         });
       var inboxSpan = $('<span></span>')
