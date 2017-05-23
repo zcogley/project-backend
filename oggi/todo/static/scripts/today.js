@@ -156,13 +156,49 @@ function render() {
       var completeElement = $('<li></li>')
         .attr('class', 'btn-group btn-block');
 
-      var delButton = $('<button></button>')
-        .attr('class', 'btn btn-danger')
-        .click(function() {
-          var index = model.completes.indexOf(complete);
-          model.completes.splice(index, 1);
-          render();
-        });
+        var delButton = $('<button></button>')
+          .attr('class', 'btn btn-danger')
+          .click(function() {
+            var index = item.pk;
+
+            // get the CSRF token for validation
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            // sets up ajax to send the CSRF token
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
+            // sends the event to the DB
+            $.ajax({
+              method: "POST",
+              url: "/delete/",
+              dataType: "json",
+              data: {
+                key: index
+              },
+
+              success: function(response) {
+                console.log(response);
+                console.log("event deleted from the DB")
+              },
+                error(err) {
+                  console.log(err);
+                },
+            });
+
+            getEvents()
+            render();
+          });
 
       var trashSpan = $('<span></span')
         .attr('class', 'glyphicon glyphicon-trash')
@@ -222,8 +258,44 @@ function render() {
       var delButton = $('<button></button>')
         .attr('class', 'btn btn-danger')
         .click(function() {
-          var index = model.upcoming.indexOf(event);
-          model.upcoming.splice(index, 1);
+          var index = item.pk;
+
+          // get the CSRF token for validation
+          var csrftoken = getCookie('csrftoken');
+
+          function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+          }
+
+          // sets up ajax to send the CSRF token
+          $.ajaxSetup({
+              beforeSend: function(xhr, settings) {
+                  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                  }
+              }
+          });
+
+          // sends the event to the DB
+          $.ajax({
+            method: "POST",
+            url: "/delete/",
+            dataType: "json",
+            data: {
+              key: index
+            },
+
+            success: function(response) {
+              console.log(response);
+              console.log("event deleted from the DB")
+            },
+              error(err) {
+                console.log(err);
+              },
+          });
+
+          getEvents()
           render();
         });
 
