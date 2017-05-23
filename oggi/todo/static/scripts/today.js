@@ -86,7 +86,8 @@ function render() {
 
             success: function(response) {
               console.log(response);
-              console.log("event deleted from the DB")
+              console.log("event deleted from the DB");
+              getEvents();
             },
               error(err) {
                 console.log(err);
@@ -143,7 +144,8 @@ function render() {
             },
 
             success: function(response) {
-              console.log("event moved to done")
+              console.log("event moved to done");
+              getEvents();
             },
               error(err) {
                 console.log(err);
@@ -216,7 +218,8 @@ function render() {
 
               success: function(response) {
                 console.log(response);
-                console.log("event deleted from the DB")
+                console.log("event deleted from the DB");
+                getEvents();
               },
                 error(err) {
                   console.log(err);
@@ -270,7 +273,8 @@ function render() {
             },
 
             success: function(response) {
-              console.log("event moved to today")
+              console.log("event moved to today");
+              getEvents();
             },
               error(err) {
                 console.log(err);
@@ -322,6 +326,7 @@ function render() {
         },
 
         success: function(response) {
+          getEvents();
           console.log(response);
           console.log("All completed events deleted from the DB")
         },
@@ -376,6 +381,7 @@ function render() {
             },
 
             success: function(response) {
+              getEvents();
               console.log(response);
               console.log("event deleted from the DB")
             },
@@ -435,6 +441,7 @@ function render() {
             },
 
             success: function(response) {
+              getEvents();
               console.log("event moved to today")
             },
               error(err) {
@@ -516,6 +523,7 @@ $(document).ready(() => {
       },
 
       success: function(response) {
+        getEvents();
         console.log(response);
         console.log("today event added to the DB")
       },
@@ -563,6 +571,7 @@ $(document).ready(() => {
       },
 
       success: function(response) {
+        getEvents();
         console.log(response);
         console.log("soon event added to the DB")
       },
