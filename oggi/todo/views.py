@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_list_or_404, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 
 from .models import item
 
@@ -32,19 +32,12 @@ def done(request):
 
 def add(request):
     if request.method == "POST":
-        # form = itemForm(request.POST)
-        # if form.is_valid():
-        #     item = form.save(commit=False)
-        #     item.author = request.user
-        #     item.save()
-        #     return redirect('add')
+        author = request.user
+        title = request.POST['title']
+        day = request.POST['day']
+        item.objects.create(author=author, title=title, day=day)
 
-
-
-        # obj = serializers.deserialize('json', data, ignorenonexistent=True)
-        # obj.save()
-
-        return HttpResponse('just seeing if I can get a response')
+        return HttpResponse('200')
 
     else:
         form = itemForm()

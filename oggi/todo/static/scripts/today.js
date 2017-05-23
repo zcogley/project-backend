@@ -285,13 +285,9 @@ $(document).ready(() => {
       data: {
         // csrfmiddlewaretoken: "{{ csrf_token }}",
         model: "todo.item",
-        fields: {
-          author: 1,
-          day: "today",
-          title: model.currentEvent
-        },
+        day: "today",
+        title: model.currentEvent
       },
-
 
       success: function(response) {
         console.log(response);
