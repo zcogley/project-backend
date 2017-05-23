@@ -263,13 +263,15 @@ $(document).ready(() => {
     // don't refresh the page
     evt.preventDefault();
 
-    // add a new event from whatever typed
+    // get the CSRF token for validation
     var csrftoken = getCookie('csrftoken');
 
     function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
+
+    // sets up ajax to send the CSRF token
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -278,12 +280,12 @@ $(document).ready(() => {
         }
     });
 
+    // sends the event to the DB
     $.ajax({
       method: "POST",
       url: "/add/",
       dataType: "json",
       data: {
-        // csrfmiddlewaretoken: "{{ csrf_token }}",
         model: "todo.item",
         day: "today",
         title: model.currentEvent
@@ -291,7 +293,7 @@ $(document).ready(() => {
 
       success: function(response) {
         console.log(response);
-        console.log("an event was added")
+        console.log("today event added to the DB")
       },
         error(err) {
           console.log(err);
@@ -310,9 +312,45 @@ $(document).ready(() => {
     // don't refresh the page
     evt.preventDefault();
 
-    // add a new event from whatever typed
-    addUpcomingEvent(model.currentEvent);
+    // get the CSRF token for validation
+    var csrftoken = getCookie('csrftoken');
 
+    function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    // sets up ajax to send the CSRF token
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    // sends the event to the DB
+    $.ajax({
+      method: "POST",
+      url: "/add/",
+      dataType: "json",
+      data: {
+        model: "todo.item",
+        day: "soon",
+        title: model.currentEvent
+      },
+
+      success: function(response) {
+        console.log(response);
+        console.log("soon event added to the DB")
+      },
+        error(err) {
+          console.log(err);
+        },
+    });
+
+    getEvents();
+    
     // renders page
     render();
 

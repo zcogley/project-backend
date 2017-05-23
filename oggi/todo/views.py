@@ -37,7 +37,7 @@ def add(request):
         day = request.POST['day']
         item.objects.create(author=author, title=title, day=day)
 
-        return HttpResponse('200')
+        return HttpResponse('201')
 
     else:
         form = itemForm()
