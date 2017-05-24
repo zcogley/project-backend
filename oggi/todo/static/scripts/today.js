@@ -17,7 +17,12 @@ function getEvents() {
 
     success: function(response) {
       model = JSON.parse(response);
-      }
+      render();
+    },
+    error(err) {
+      console.log(err);
+      console.log("error updating event model");
+    },
   });
 }
 
@@ -41,8 +46,6 @@ function getCookie(name) {
 
 // ----------VIEW----------
 function render() {
-
-  getEvents();
 
   $('#instructions').empty();
   $('#events').empty();
@@ -94,7 +97,6 @@ function render() {
               },
           });
 
-          render();
         });
 
       var trashSpan = $('<span></span')
@@ -152,7 +154,6 @@ function render() {
               },
           });
 
-          render();
         });
 
       var checkSpan = $('<span></span>')
@@ -226,7 +227,6 @@ function render() {
                 },
             });
 
-            render();
           });
 
       var trashSpan = $('<span></span')
@@ -281,7 +281,6 @@ function render() {
               },
           });
 
-          render();
         });
       var redoSpan = $('<span></span>')
         .attr('class', 'glyphicon glyphicon-refresh')
@@ -335,7 +334,6 @@ function render() {
           },
       });
 
-      render();
     });
   $('#clearall').empty();
   $('#clearall').append(clearButton);
@@ -390,7 +388,6 @@ function render() {
               },
           });
 
-          render();
         });
 
       var trashSpan = $('<span></span')
@@ -449,7 +446,6 @@ function render() {
               },
           });
 
-          render();
         });
       var inboxSpan = $('<span></span>')
         .attr('class', 'glyphicon glyphicon-inbox')
@@ -476,8 +472,6 @@ function addUpcomingEvent(event){
 
 // ---------DOM EVENT HANDLERS---------
 $(document).ready(() => {
-  getEvents();
-  // update model for todo items
 
   // when the textbox content changes, updates the .currentEvent
   // property of the model
@@ -532,9 +526,6 @@ $(document).ready(() => {
         },
     });
 
-    // renders page
-    render();
-
   });
 
   // when the add upcoming event form is submitted
@@ -579,9 +570,6 @@ $(document).ready(() => {
           console.log(err);
         },
     });
-
-    // renders page
-    render();
 
     // clears the eventbox and focuses it
     $('#comingupbox').val('');
