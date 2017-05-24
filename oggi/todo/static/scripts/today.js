@@ -168,11 +168,7 @@ function render() {
     }
   });
 
-  // clears the eventbox
-  $('#eventbox').val('');
 
-  // gives focus to the eventbox
-  $('#eventbox').focus();
 
   // clears the complete area
   $('#completes').empty();
@@ -520,6 +516,13 @@ $(document).ready(() => {
         getEvents();
         console.log(response);
         console.log("today event added to the DB")
+
+        // clears the eventbox
+        $('#eventbox').val('');
+
+        // gives focus to the eventbox
+        $('#eventbox').focus();
+
       },
         error(err) {
           console.log(err);
@@ -565,15 +568,18 @@ $(document).ready(() => {
         getEvents();
         console.log(response);
         console.log("soon event added to the DB")
+
+        // clears the eventbox and focuses it
+        $('#comingupbox').val('');
+        $('#comingupbox').focus();
+
       },
         error(err) {
           console.log(err);
         },
     });
 
-    // clears the eventbox and focuses it
-    $('#comingupbox').val('');
-    $('#comingupbox').focus();
+
   });
 
   // Makes Events and Completes and Upcoming Sortable
