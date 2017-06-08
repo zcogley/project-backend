@@ -36,3 +36,8 @@ li {
 .btn-default {
   white-space: normal;
 }
+
+.logged-out {
+    background: gainsboro url("/static/img/WhatAreYouLookingAt.jpg") no-repeat center 30px;
+    background-size: 90%;
+}

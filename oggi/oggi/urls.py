@@ -23,4 +23,5 @@ urlpatterns = [
     # url(r'^soon/', include('todo.urls')),
     # url(r'^done/', include('todo.urls')),
     url(r'', include('todo.urls')),
+    url(r'^accounts/', include('allauth.urls')),
 ]
