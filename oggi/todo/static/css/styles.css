@@ -37,7 +37,13 @@ li {
   white-space: normal;
 }
 
+.logged-in {
+    background: gainsboro url("/static/img/CCTVMobile.pgn") no-repeat center 80px;
+}
 .logged-out {
     background: gainsboro url("/static/img/WhatAreYouLookingAt.jpg") no-repeat center 30px;
     background-size: 90%;
+}
+.pull-right {
+    float:right;
 }
