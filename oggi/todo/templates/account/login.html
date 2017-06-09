@@ -1,28 +1,51 @@
-{% extends "account/base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name=viewport content="width=device-width, initial-scale=1">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-2.2.3.js"></script>
+
+  <!-- Sortable -->
+  <script src="https://rubaxa.github.io/Sortable/Sortable.js"></script>
+
+  <!-- Latest compiled and minified Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- our CSS -->
+  <link rel="stylesheet" href="/staticcss/styles.css">
+
+  <title>ToDay</title>
+</head>
 
 {% load i18n %}
 {% load account socialaccount %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+<!-- {% block head_title %}{% trans "Sign In" %}{% endblock %} -->
 
 {% block content %}
 
-<h1>{% trans "Sign In" %}</h1>
+<!-- <h1>{% trans "Sign In" %}</h1> -->
 
 {% get_providers as socialaccount_providers %}
 
 {% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+<!-- <p>{% blocktrans with site.name as site_name %}Please sign in with one
+of your existing third party accounts. Or,  -->
+
+<a href="{{ signup_url }}">Sign up</a>
+for a {{ site_name }} account or sign in below:{% endblocktrans %}</p>
 
 <div class="socialaccount_ballot">
 
-  <ul class="socialaccount_providers">
+  <!-- <ul class="socialaccount_providers">
     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
+  </ul> -->
 
-  <div class="login-or">{% trans 'or' %}</div>
+  <div class="login-or">
+    <!-- {% trans 'or' %} -->
+  </div>
 
 </div>
 
