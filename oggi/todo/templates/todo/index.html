@@ -1,24 +1,102 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% if request.user.is_authenticated %}Logged In{% else %}Not Logged In{% endif %}</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+  <meta charset="utf-8"/>
+  <meta name=viewport content="width=device-width, initial-scale=1">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-2.2.3.js"></script>
+
+  <!-- Sortable -->
+  <script src="https://rubaxa.github.io/Sortable/Sortable.js"></script>
+
+  <!-- Latest compiled and minified Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- our CSS -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+  <title>ToDay</title>
 </head>
-<body class="{% if request.user.is_authenticated %}logged-in{% else %}logged-out{% endif %}">
 
-{% if request.user.is_authenticated %}
-    <a href="/accounts/logout/" class="pull-right">Logout</a>
-    <!-- <img src="{{ request.user.profile.profile_image_url }}"/> -->
+<body>
+  <header class="jumbotron">
+    <h1>Oggi</h1>
+    <p>A simple task list.</p>
+  </header>
 
-    {% if request.user.first_name or request.user.last_name %}
-        {{ request.user.first_name }} {{ request.user.last_name }}
+  <main>
+    <div id="instructions">
+      <p>Add things you want to do by typing in the textboxes and hitting return.
+      <br>The trash icon for each 'today' event removes it from the list.
+      <br>You can reorder events by dragging and dropping.
+      <br>The check icon marks each event as done.
+      <br>Use the 'Finito' button to remove everything you've done.
+      </p>
+    </div>
+    <!-- A section for the things on the ToDo list -->
+
+    <div class="col-sm-4">
+      <div id="eventstuff">
+        <h4>Today:</h4>
+        <ul id="events" id="sortable">
+        </ul>
+      </div>
+
+      <!-- A section for the add event form, which is always showing -->
+      <div id="addstuff">
+        <form id="add-event-form">
+          <input type="text" id="eventbox" autofocus/>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div id="comingup">
+        <h4>Soon:</h4>
+        <ul id="upcomings" id="sortable">
+        </ul>
+      </div>
+
+      <!-- A section for the coming up events -->
+      <div id="upcomingstuff">
+        <form id="add-upcoming-form">
+          <input type="text" id="comingupbox"/>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div id="completestuff">
+        <h4>Done:</h4>
+        <ul id="completes" id="sortable">
+        </ul>
+      </div>
+
+      <div id="clearall">
+        <button class="btn btn-primary" id="clearall">Finito</button>
+      </div>
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <a href="/accounts/logout/" class="pull-right">Logout</a>
+        <!-- <img src="{{ request.user.profile.profile_image_url }}"/> -->
+
+        {% if request.user.first_name or request.user.last_name %}
+            {{ request.user.first_name }} {{ request.user.last_name }}
+        {% else %}
+            {{ request.user.username }}
+        {% endif %}
+
     {% else %}
-        {{ request.user.username }}
+        <a href="/accounts/login/" class="pull-right">Login</a>
     {% endif %}
-    {% if request.user.profile.account_verified %} (verified) {% else %} (unverified) {% endif %}
 
-{% else %}
-    <a href="/accounts/login/" class="pull-right">Login</a>
-{% endif %}
+
+  </main>
+
+  <script src="{% static 'scripts/today.js' %}"></script>
 </body>
 </html>
