@@ -1,23 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8"/>
-  <meta name=viewport content="width=device-width, initial-scale=1">
+{% extends "account/base.html" %}
 
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-2.2.3.js"></script>
-
-  <!-- Sortable -->
-  <script src="https://rubaxa.github.io/Sortable/Sortable.js"></script>
-
-  <!-- Latest compiled and minified Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-  <!-- our CSS -->
-  <link rel="stylesheet" href="/staticcss/styles.css">
-
-  <title>ToDay</title>
-</head>
 
 {% load i18n %}
 {% load account socialaccount %}
@@ -34,8 +16,9 @@
 <!-- <p>{% blocktrans with site.name as site_name %}Please sign in with one
 of your existing third party accounts. Or,  -->
 
-<a href="{{ signup_url }}">Sign up</a>
-for a {{ site_name }} account or sign in below:{% endblocktrans %}</p>
+<h1>Sign In</h1>
+Sign in  below or <a href="{{ signup_url }}">sign up</a>
+for a {{ site_name }} account.{% endblocktrans %}</p>
 
 <div class="socialaccount_ballot">
 
@@ -63,7 +46,7 @@ for a {{ site_name }} account or sign in below:{% endblocktrans %}</p>
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+  <button class="btn btn-primary primaryAction" type="submit">{% trans "Sign In" %}</button>
 </form>
 
 {% endblock %}
