@@ -589,4 +589,5 @@ $(document).ready(() => {
   var sortable = Sortable.create(ell);
   var elll = document.getElementById('upcomings');
   var sortable = Sortable.create(elll);
+
 })

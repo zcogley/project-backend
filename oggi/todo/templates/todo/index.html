@@ -18,7 +18,7 @@
   <!-- our CSS -->
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
-  <title>ToDay</title>
+  <title>Oggi</title>
 </head>
 
 <body>
@@ -107,5 +107,10 @@
   </main>
 
   <script src="{% static 'scripts/today.js' %}"></script>
+  {% if user.is_authenticated %}
+    <script type="text/javascript">
+         getEvents();
+     </script>
+{% endif %}
 </body>
 </html>
