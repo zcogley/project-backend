@@ -25,6 +25,8 @@ SECRET_KEY = 'f#p5cv=yitah*7!2bm8eh0pynql7&mwk5e7q+e8^z9i+6ce0tg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# SECURE_SSL_REDIRECT = True
+
 ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', ]
 
 SITE_ID = 1
