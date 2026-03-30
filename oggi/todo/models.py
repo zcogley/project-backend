@@ -5,7 +5,7 @@ from allauth.socialaccount.models import SocialAccount
 import hashlib
 
 class item(models.Model):
-    author = models.ForeignKey('auth.User')
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     day = models.CharField(max_length=200)
 
@@ -13,7 +13,7 @@ class item(models.Model):
         return self.title
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, related_name='profile')
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
 
     def __unicode__(self):
         return "{}'s profile".format(self.user.username)
